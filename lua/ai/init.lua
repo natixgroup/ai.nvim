@@ -147,6 +147,9 @@ function M.fill(tpl, args)
   return tpl
 end
 
+
+-- Explain the function M.handle with verbose comment blocks inline
+--
 function M.handle(name, input)
   local def = M.prompts[name]
   local width = vim.fn.winwidth(0)

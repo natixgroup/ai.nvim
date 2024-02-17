@@ -34,7 +34,7 @@ function query.ask(prompt, opts, api_key)
       },
       body = vim.fn.json_encode(
           {
-            model = 'gpt-4',
+            model = 'gpt-4-turbo-preview',
             messages = {
               { role = 'user', content = prompt}},
             temperature = 0.7
