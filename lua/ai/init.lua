@@ -62,9 +62,9 @@ local function splitLines(input)
 end
 
 local function joinLines(lines)
-  local result = ''
+  local result = ""
   for _, line in ipairs(lines) do
-    result = result .. line
+    result = result .. line .. "\n"
   end
   return result
 end
@@ -76,6 +76,7 @@ end
 function M.hasLetters(text)
   return type(text) == 'string' and text:match('[a-zA-Z]') ~= nil
 end
+
 
 function M.getSelectedText(esc)
   if esc then
