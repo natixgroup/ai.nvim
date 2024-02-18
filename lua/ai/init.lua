@@ -47,18 +47,17 @@ M.opts = {
 M.prompts = default_prompts
 local win_id
 
--- Create a function M.findConfig to find the configuration file
--- * look for ".aiconfig" in the current directory
--- * if found, print the content in the debug console
--- * if not found, go to the parent directory and repeat the process
--- * if the root directory is reached, print an error message
---
 function M.findConfig()
   local path = vim.fn.getcwd()
   while path ~= '/' do
     local config = path .. '/.aiconfig'
     if vim.fn.filereadable(config) == 1 then
       print('Found config at ' .. config)
+      -- print the content of the file
+      local lines = vim.fn.readfile(config)
+      for _, line in ipairs(lines) do
+        print(line)
+      end
       return
     end
     path = vim.fn.fnamemodify(path, ':h')
