@@ -34,6 +34,27 @@ local default_prompts = {
   },
 }
 
+
+-- Write a function that:
+-- * finds the nearest ".git" directory upwards from the current file
+-- * check if there is a ".aiconfig" file in the ".git" directory
+-- * if there is, read the file and output the content to the debug console
+M.findConfig = function()
+  local path = vim.fn.expand('%:p:h')
+  while path ~= '/' do
+    local configPath = path .. '/.git/.aiconfig'
+    if vim.fn.filereadable(configPath) == 1 then
+      local file = io.open(configPath, 'r')
+      local content = file:read('*a')
+      file:close()
+      print(content)
+      return
+    end
+    path = vim.fn.fnamemodify(path, ':h')
+  end
+  print('No config found')
+end
+
 local M = {}
 M.opts = {
   gemini_api_key = '',
@@ -239,5 +260,8 @@ vim.api.nvim_create_user_command('GeminiDefineCword', function()
     M.handle('define', text)
   end
 end, {})
+
+-- Create a user command "AIConfig" to call the function M.findConfig
+vim.api.nvim_create_user_command('AIConfig', M.findConfig, {})
 
 return M
