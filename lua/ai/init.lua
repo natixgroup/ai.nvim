@@ -230,8 +230,6 @@ function M.setup(opts)
     end
   end
 
-  assert(M.opts.gemini_api_key ~= nil and M.opts.gemini_api_key ~= '', 'gemini_api_key is required')
-  assert(M.opts.chatgpt_api_key ~= nil and M.opts.chatgpt_api_key ~= '', 'chatgpt_api_key is required')
 
   for k, v in pairs(M.prompts) do
     if v.command then
@@ -262,7 +260,7 @@ vim.api.nvim_create_user_command('GeminiDefineCword', function()
   end
 end, {})
 
--- Create a user command "AIConfig" to call the function M.findConfig
-vim.api.nvim_create_user_command('AIConfig', M.findConfig(), {})
+-- Create a user command "AIFindConfig" to call the function M.findConfig
+vim.api.nvim_create_user_command('AIFindConfig', M.findConfig(), {})
 
 return M
