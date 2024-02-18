@@ -261,6 +261,6 @@ vim.api.nvim_create_user_command('GeminiDefineCword', function()
 end, {})
 
 -- Create a user command "AIFindConfig" to call the function M.findConfig
-vim.api.nvim_create_user_command('AIFindConfig', M.findConfig(), {})
+vim.api.nvim_create_user_command('AIFindConfig', M.findConfig, {})
 
 return M
