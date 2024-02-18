@@ -51,7 +51,7 @@ local win_id
 -- * finds the nearest ".git" directory upwards from the current file
 -- * check if there is a ".aiconfig" file in the ".git" directory
 -- * if there is, read the file and output the content to the debug console
-local function findConfig()
+function M.findConfig()
   local path = vim.fn.expand('%:p:h')
   while path ~= '/' do
     local configPath = path .. '/.git/.aiconfig'
@@ -263,6 +263,6 @@ vim.api.nvim_create_user_command('GeminiDefineCword', function()
 end, {})
 
 -- Create a user command "AIConfig" to call the function M.findConfig
-vim.api.nvim_create_user_command('AIConfig', findConfig(), {})
+vim.api.nvim_create_user_command('AIConfig', M.findConfig(), {})
 
 return M
