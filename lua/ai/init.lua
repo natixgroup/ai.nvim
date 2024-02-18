@@ -47,13 +47,9 @@ M.opts = {
 M.prompts = default_prompts
 local win_id
 
--- Write a function that:
--- * finds the nearest ".git" directory upwards from the current file
--- * check if there is a ".aiconfig" file in the ".git" directory
--- * if there is, read the file and output the content to the debug console
 function M.findConfig()
-  local path = vim.fn.expand('%:p:h')
-  while path ~= '/' do
+  local path = vim.fn.expand(':p:h')
+  while path and path ~= '' do
     local configPath = path .. '/.git/.aiconfig'
     if vim.fn.filereadable(configPath) == 1 then
       local file = io.open(configPath, 'r')
@@ -62,6 +58,7 @@ function M.findConfig()
       print(content)
       return
     end
+    if path == '/' then break end
     path = vim.fn.fnamemodify(path, ':h')
   end
   print('No config found')
