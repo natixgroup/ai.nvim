@@ -2,39 +2,14 @@ local gemini = require('ai.gemini.query')
 local chatgpt = require('ai.chatgpt.query')
 
 local default_prompts = {
-  define = {
-    command = 'GeminiDefine',
-    loading_tpl = 'Define:\n\n${input}\n\nAsking Gemini...',
-    prompt_tpl =
-    'Define the content below in locale ${locale}. The output is a bullet list of definitions grouped by parts of speech in plain text. Each item of the definition list contains pronunciation using IPA, meaning, and a list of usage examples with at most 2 items. Do not return anything else. Here is the content:\n\n${input_encoded}',
-    result_tpl = 'Original Content:\n\n${input}\n\nDefinition:\n\n${output}',
-    require_input = true,
-  },
-  translate = {
-    command = 'GeminiTranslate',
-    loading_tpl = 'Translating the content below:\n\n${input}\n\nAsking Gemini...',
-    prompt_tpl =
-    'Translate the content below into locale ${locale}. Translate into ${alternate_locale} instead if it is already in ${locale}. Do not return anything else. Here is the content:\n\n${input_encoded}',
-    result_tpl = 'Original Content:\n\n${input}\n\nTranslation:\n\n${output}',
-    require_input = true,
-  },
-  improve = {
-    command = 'GeminiImprove',
-    loading_tpl = 'Improve the content below:\n\n${input}\n\nAsking Gemini...',
-    prompt_tpl = 'Improve the content below in the same locale. Do not return anything else. Here is the content:\n\n${input_encoded}',
-    result_tpl = 'Original Content:\n\n${input}\n\nImproved Content:\n\n${output}',
-    require_input = true,
-  },
   freeStyle = {
-    command = 'GeminiAsk',
+    command = 'AIAsk',
     loading_tpl = 'Loading...',
     prompt_tpl = '${input}',
     result_tpl = '${output}',
     require_input = true,
   },
 }
-
-
 
 local M = {}
 M.opts = {
@@ -167,9 +142,6 @@ function M.fill(tpl, args)
   return tpl
 end
 
-
--- Explain the function M.handle with verbose comment blocks inline
---
 function M.handle(name, input)
   local def = M.prompts[name]
   local width = vim.fn.winwidth(0)
@@ -251,7 +223,7 @@ vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
   callback = M.close,
 })
 
-vim.api.nvim_create_user_command('GeminiDefineCword', function()
+vim.api.nvim_create_user_command('AIDefineCword', function()
   local text = vim.fn.expand('<cword>')
   if M.hasLetters(text) then
     M.handle('define', text)

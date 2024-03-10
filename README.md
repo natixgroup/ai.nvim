@@ -1,8 +1,7 @@
 # ai.nvim
 
-A Neovim plugin powered by Google Gemini.
+A Neovim plugin powered by Google Gemini and CahtGPT.
 
-https://github.com/gera2ld/ai.nvim/assets/3139113/539834ed-af80-4ded-81f4-26afa80ddfd3
 
 ## Installation
 
@@ -12,10 +11,11 @@ Using lazy.nvim:
 
 ```lua
 {
-  'gera2ld/ai.nvim',
+  'natixgroup/ai.nvim',
   dependencies = 'nvim-lua/plenary.nvim',
   opts = {
-    api_key = 'YOUR_GEMINI_API_KEY', -- or read from env: `os.getenv('GEMINI_API_KEY')`
+    gemini_api_key = 'YOUR_GEMINI_API_KEY', -- or read from env: `os.getenv('GEMINI_API_KEY')`
+    chatgtp_api_key = 'YOUR_CHATGPT_API_KEY', -- or read from env: `os.getenv('CHATGPT_API_KEY')`
     -- The locale for the content to be defined/translated into
     locale = 'en',
     -- The locale for the content in the locale above to be translated into
@@ -27,51 +27,12 @@ Using lazy.nvim:
     -- Define custom prompts here, see below for more details
     prompts = {},
   },
-  event = 'VeryLazy',
+  event = 'VimEnter',
 },
 ```
 
 ## Usage
 
-### Built-in Commands
-
-```viml
-" Define the word under cursor
-:GeminiDefineCword
-
-" Define the word or phrase selected or passed to the command
-:'<,'>GeminiDefine
-:GeminiDefine happy
-
-" Translate content selected or passed to the commmand
-:'<,'>GeminiTranslate
-:GeminiTranslate I am happy.
-
-" Improve content selected or passed to the command
-" Useful to correct grammar mistakes and make the expressions more native.
-:'<,'>GeminiImprove
-:GeminiTranslate Me is happy.
-
-" Ask anything
-:GeminiAsk Tell a joke.
-```
-
-### Custom Prompts
-
-```lua
-opts = {
-  prompts = {
-    rock = {
-      -- Create a user command for this prompt
-      command = 'GeminiRock',
-      loading_tpl = 'Loading...',
-      prompt_tpl = 'Tell a joke',
-      result_tpl = 'Here is your joke:\n\n$output',
-      require_input = false,
-    },
-  },
-}
-```
 
 The prompts will be merged into built-in prompts. Here are the available fields for each prompt:
 
