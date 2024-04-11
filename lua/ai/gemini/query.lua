@@ -1,3 +1,4 @@
+-- Explain what this code does:
 local curl = require('plenary.curl')
 local query = {}
 
@@ -41,7 +42,7 @@ function query.askCallback(res, prompt, opts)
 end
 
 function query.ask(prompt, opts, api_key)
-  curl.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent?key=' .. api_key,
+  curl.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=' .. api_key,
     {
       raw = { '-H', 'Content-type: application/json' },
       body = vim.fn.json_encode({
