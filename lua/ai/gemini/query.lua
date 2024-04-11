@@ -41,7 +41,7 @@ function query.askCallback(res, prompt, opts)
 end
 
 function query.ask(prompt, opts, api_key)
-  curl.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' .. api_key,
+  curl.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent?key=' .. api_key,
     {
       raw = { '-H', 'Content-type: application/json' },
       body = vim.fn.json_encode({
