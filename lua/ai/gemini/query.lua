@@ -37,7 +37,7 @@ function query.askCallback(res, prompt, opts)
       result = 'Error: Gemini API responded with the status ' .. tostring(res.status) .. '\n\n' .. res.body
     end
   else
-    local data = escapePercent(vim.fn.json_decode(res.body))
+    local data = query.escapePercent(vim.fn.json_decode(res.body))
     result = query.formatResult(data)
     if opts.handleResult ~= nil then
       result = opts.handleResult(result)
