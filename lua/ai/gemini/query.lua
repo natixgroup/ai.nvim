@@ -2,6 +2,11 @@
 local curl = require('plenary.curl')
 local query = {}
 
+-- Function in order to escape "%" character
+function query.escapePercent(s)
+  return string.gsub(s, "%%", "%%%%")
+end
+
 function query.formatResult(data)
   local result = ''
   local candidates_number = #data['candidates']
@@ -32,7 +37,7 @@ function query.askCallback(res, prompt, opts)
       result = 'Error: Gemini API responded with the status ' .. tostring(res.status) .. '\n\n' .. res.body
     end
   else
-    local data = vim.fn.json_decode(res.body)
+    local data = escapePercent(vim.fn.json_decode(res.body))
     result = query.formatResult(data)
     if opts.handleResult ~= nil then
       result = opts.handleResult(result)
