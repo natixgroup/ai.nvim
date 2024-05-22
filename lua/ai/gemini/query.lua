@@ -16,7 +16,7 @@ function query.formatResult(data)
       return result
     else
       result = '\n# This is Gemini answer\n\n'
-      result = result .. data['candidates'][1]['content']['parts'][1]['text'] .. '\n'
+      result = result .. query.escapePercent(data['candidates'][1]['content']['parts'][1]['text']) .. '\n'
     end
   else
     result = '# There are ' .. candidates_number .. ' Gemini candidates\n'
@@ -37,7 +37,7 @@ function query.askCallback(res, prompt, opts)
       result = 'Error: Gemini API responded with the status ' .. tostring(res.status) .. '\n\n' .. res.body
     end
   else
-    local data = query.escapePercent(vim.fn.json_decode(res.body))
+    local data = vim.fn.json_decode(res.body)
     result = query.formatResult(data)
     if opts.handleResult ~= nil then
       result = opts.handleResult(result)

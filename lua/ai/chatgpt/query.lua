@@ -9,7 +9,7 @@ end
 function query.formatResult(data)
   local result = '\n# This is ChatGPT answer\n\n'
   result = result .. data.choices[1].message.content .. '\n\n'
-  return result
+  return query.escapePercent(result)
 end
 
 function query.askCallback(res, prompt, opts)
@@ -21,7 +21,7 @@ function query.askCallback(res, prompt, opts)
       result = 'Error: ChatGPT API responded with the status ' .. tostring(res.status) .. '\n\n' .. res.body
     end
   else
-    local data = query.escapePercent(vim.fn.json_decode(res.body))
+    local data = vim.fn.json_decode(res.body)
     result = query.formatResult(data)
     if opts.handleResult ~= nil then
       result = opts.handleResult(result)
